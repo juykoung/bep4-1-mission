@@ -2,6 +2,7 @@ package com.back.entity;
 
 import com.back.jpa.entity.BaseIdAndTime;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -29,6 +30,12 @@ public class Post extends BaseIdAndTime {
         this.author = author;
         this.title = title;
         this.content = content;
+    }
+
+    public PostComment addComment(Member author, String content) {
+        PostComment postComment = new PostComment(this, author, content);
+        comments.add(postComment);
+        return postComment;
     }
 
     public boolean hasComments() {
