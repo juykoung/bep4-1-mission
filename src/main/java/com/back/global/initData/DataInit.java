@@ -15,6 +15,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.Transactional;
 
 @Configuration
@@ -43,6 +44,7 @@ public class DataInit {
     }
 
     @Transactional
+    @Order(1)
     public void makeBaseMembers() {
         if (memberFacade.count() > 0) return;
 
@@ -55,6 +57,7 @@ public class DataInit {
     }
 
     @Transactional
+    @Order(2)
     public void makeBasePosts() {
         if (postFacade.count() > 0) return;
 
