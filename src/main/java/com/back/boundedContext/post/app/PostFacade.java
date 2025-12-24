@@ -8,31 +8,27 @@ import com.back.shared.dto.PostDto;
 import com.back.shared.event.PostCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class PostService {
+public class PostFacade {
     private final PostRepository postRepository;
-    private final EventPublisher eventPublisher;
+    private final PostFacade postFacade;
 
+    @Transactional(readOnly = true)
     public long count() {
         return postRepository.count();
     }
 
+    @Transactional
     public Post write(Member author, String title, String content) {
-        Post post = postRepository.save(new Post(author, title, content));
-        author.increseActiveScore(3);
-
-        eventPublisher.publish(
-                new PostCreatedEvent(
-                        new PostDto(post)
-                )
-        );
-        return post;
+        return postFacade.write(author, title, content);
     }
 
+    @Transactional(readOnly = true)
     public Optional<Post> findById(int id) {
         return postRepository.findById(id);
     }
