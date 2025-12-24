@@ -18,7 +18,7 @@ public class MemberJoinUseCase {
         });
         Member member = memberRepository.save(new Member(username, password, nickname));
 
-        return new RsData<>("200", "%번 멤버 가입완료".formatted(member.getId()), member);
+        return new RsData<>("200", "%d번 멤버 가입완료".formatted(member.getId()), member);
     }
 
 }

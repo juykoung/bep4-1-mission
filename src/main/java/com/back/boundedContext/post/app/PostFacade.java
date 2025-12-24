@@ -17,7 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PostFacade {
     private final PostRepository postRepository;
-    private final PostFacade postFacade;
+    private final PostWriteUseCase postWriteUseCase;
 
     @Transactional(readOnly = true)
     public long count() {
@@ -26,7 +26,7 @@ public class PostFacade {
 
     @Transactional
     public RsData<Post> write(Member author, String title, String content) {
-        return postFacade.write(author, title, content);
+        return postWriteUseCase.write(author, title, content);
     }
 
     @Transactional(readOnly = true)
