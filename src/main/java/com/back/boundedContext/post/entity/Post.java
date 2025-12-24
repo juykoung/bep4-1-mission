@@ -2,7 +2,10 @@ package com.back.boundedContext.post.entity;
 
 import com.back.boundedContext.member.entity.Member;
 import com.back.global.jpa.BaseIdAndTime;
+import com.back.shared.dto.PostCommentDto;
+import com.back.shared.event.PostCommentCreatedEvent;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -13,6 +16,7 @@ import static jakarta.persistence.CascadeType.REMOVE;
 
 @Entity
 @NoArgsConstructor
+@Getter
 public class Post extends BaseIdAndTime {
     @ManyToOne(fetch = FetchType.LAZY)
     Member author;
@@ -35,7 +39,8 @@ public class Post extends BaseIdAndTime {
     public PostComment addComment(Member author, String content) {
         PostComment postComment = new PostComment(this, author, content);
         comments.add(postComment);
-        author.increseActiveScore(1);
+//        author.increseActiveScore(1);
+        publishEvent(new PostCommentCreatedEvent(new PostCommentDto(postComment)));
         return postComment;
     }
 
