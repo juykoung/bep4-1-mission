@@ -1,11 +1,21 @@
-//package com.back.boundedContext.cash.domain;
-//
-//import jakarta.persistence.Entity;
-//import lombok.Getter;
-//import lombok.NoArgsConstructor;
-//
-//@Entity
-//@NoArgsConstructor
-//@Getter
-//public class Wallet  {
-//}
+package com.back.boundedContext.cash.domain;
+
+import com.back.global.jpa.BaseManualIdAndTime;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Entity
+@NoArgsConstructor
+@Getter
+public class Wallet extends BaseManualIdAndTime {
+    @ManyToOne(fetch = FetchType.LAZY)
+    private CashMember holder;
+
+    public Wallet(CashMember holder) {
+        super(holder.getId());
+        this.holder = holder;
+    }
+}
