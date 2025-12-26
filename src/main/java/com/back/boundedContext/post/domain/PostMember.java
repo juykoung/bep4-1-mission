@@ -8,12 +8,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "POST_MEMBER")
 @NoArgsConstructor
 @Getter
 public class PostMember extends ReplicaMember {
-    public PostMember(String username, String password, String nickname) {
-        super(username, password, nickname);
+    public PostMember(int id, LocalDateTime createDate, LocalDateTime modifyDate, String username, String password, String nickname, int activityScore) {
+        super(id, createDate, modifyDate, username, password, nickname, activityScore);
     }
 }

@@ -18,12 +18,12 @@ public abstract class BaseMember extends BaseEntity {
     private String username;
     private String password;
     private String nickname;
-    private Integer activeScore;
+    private int activeScore;
 
-    public BaseMember(String username, String password, String nickname) {
+    public BaseMember(String username, String password, String nickname,int activeScore) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
-        this.activeScore = 0;
+        this.activeScore = activeScore;
     }
 }
