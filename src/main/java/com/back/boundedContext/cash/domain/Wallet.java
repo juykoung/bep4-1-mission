@@ -39,6 +39,7 @@ public class Wallet extends BaseManualIdAndTime {
 
     public void credit(Long amount, CashLog.EventType eventType, String relTypeCode, int relId) {
         balance += amount;
+        addCashLog(amount, eventType, relTypeCode, relId);
     }
     public void credit(long amount, CashLog.EventType eventType, BaseEntity rel) {
         credit(amount, eventType, rel.getModelTypeCode(), rel.getId());

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Lazy;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
-@Table(name = "CAHS_CASH_LOG")
+@Table(name = "CASH_CASH_LOG")
 @NoArgsConstructor
 public class CashLog extends BaseIdAndTime {
     public enum EventType {
