@@ -4,6 +4,9 @@ import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.member.out.MemberRepository;
 import com.back.global.RsData.RsData;
 import com.back.global.exception.DomainException;
+import com.back.global.exception.EventPublisher.EventPublisher;
+import com.back.shared.member.dto.MemberDto;
+import com.back.shared.member.event.MemberJoinedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MemberJoinUseCase {
     private final MemberRepository memberRepository;
+    private final EventPublisher eventPublisher;
 
     public RsData<Member> join(String username, String password, String nickname) {
         memberRepository.findByUsername(username).ifPresent(m -> {
@@ -18,6 +22,7 @@ public class MemberJoinUseCase {
         });
         Member member = memberRepository.save(new Member(username, password, nickname));
 
+        eventPublisher.publish(new MemberJoinedEvent(new MemberDto(member)));
         return new RsData<>("200", "%d번 멤버 가입완료".formatted(member.getId()), member);
     }
 

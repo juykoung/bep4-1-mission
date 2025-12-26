@@ -2,8 +2,8 @@ package com.back.boundedContext.post.domain;
 
 import com.back.boundedContext.member.domain.Member;
 import com.back.global.jpa.BaseIdAndTime;
-import com.back.shared.dto.PostCommentDto;
-import com.back.shared.event.PostCommentCreatedEvent;
+import com.back.shared.post.dto.PostCommentDto;
+import com.back.shared.post.event.PostCommentCreatedEvent;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

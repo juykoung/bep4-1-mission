@@ -1,13 +1,12 @@
 package com.back.boundedContext.post.app;
 
-import com.back.boundedContext.member.app.MemberFacade;
 import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.post.domain.Post;
 import com.back.boundedContext.post.out.PostRepository;
 import com.back.global.RsData.RsData;
 import com.back.global.exception.EventPublisher.EventPublisher;
-import com.back.shared.dto.PostDto;
-import com.back.shared.event.PostCreatedEvent;
+import com.back.shared.post.dto.PostDto;
+import com.back.shared.post.event.PostCreatedEvent;
 import com.back.shared.member.out.MemberApiClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
