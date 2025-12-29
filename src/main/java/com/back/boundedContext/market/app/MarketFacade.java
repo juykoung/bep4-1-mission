@@ -2,6 +2,7 @@ package com.back.boundedContext.market.app;
 
 import com.back.boundedContext.market.domain.Cart;
 import com.back.boundedContext.market.domain.MarketMember;
+import com.back.boundedContext.market.domain.Order;
 import com.back.boundedContext.market.domain.Product;
 import com.back.global.RsData.RsData;
 import com.back.shared.market.dto.MarketMemberDto;
@@ -19,6 +20,7 @@ public class MarketFacade {
     private final MarketSupport marketSupport;
     private final MarketCreateProductUseCase marketCreateProductUseCase;
     private final MarketCreateCartUseCase marketCreateCartUseCase;
+    private final MarketCreateOrderUseCase marketCreateOrderUseCase;
 
     @Transactional
     public MarketMember syncMember(MemberDto member) {
@@ -69,5 +71,13 @@ public class MarketFacade {
     @Transactional(readOnly = true)
     public Optional<Product> findProductById(int id) {
        return marketSupport.findProductById(id);
+    }
+
+    public long ordersCount() {
+        return marketSupport.countOrders();
+    }
+
+    public RsData<Order> createOrder(Cart cart) {
+        return marketCreateOrderUseCase.createOrder(cart);
     }
 }
