@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -79,5 +80,15 @@ public class MarketFacade {
 
     public RsData<Order> createOrder(Cart cart) {
         return marketCreateOrderUseCase.createOrder(cart);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Order> findOrderById(int id) {
+        return marketSupport.findOrderById(id);
+    }
+
+    @Transactional
+    public void requestPayment(Order order, long pgPaymentAmount) {
+        order.requestPayment(pgPaymentAmount);
     }
 }

@@ -1,10 +1,13 @@
 package com.back.boundedContext.market.domain;
 
 import com.back.global.jpa.BaseIdAndTime;
+import com.back.shared.market.dto.OrderDto;
+import com.back.shared.market.event.MarketOrderPaymentRequestEvent;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +34,9 @@ public class Order extends BaseIdAndTime {
     private long price;
     private long salePrice;
 
+    private LocalDateTime requestPaymentDate;
+    private LocalDateTime paymentDate;
+
     @OneToMany(mappedBy = "order", cascade = {PERSIST, REMOVE}, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
 
@@ -56,5 +62,28 @@ public class Order extends BaseIdAndTime {
         price += product.getPrice();
         salePrice += product.getSalePrice();
 
+    }
+
+    public void completePayment() {
+        paymentDate = LocalDateTime.now();
+    }
+
+    public void requestPayment(long pgPaymentAmount) {
+        requestPaymentDate = LocalDateTime.now();
+
+        publishEvent(
+                new MarketOrderPaymentRequestEvent(
+                        new OrderDto(this),
+                        pgPaymentAmount
+                )
+        );
+    }
+
+    public void cancelRequestPayment() {
+        paymentDate = null;
+    }
+
+    public boolean isPaid() {
+        return paymentDate != null;
     }
 }

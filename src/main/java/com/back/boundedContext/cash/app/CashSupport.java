@@ -1,6 +1,7 @@
 package com.back.boundedContext.cash.app;
 
 import com.back.boundedContext.cash.domain.CashMember;
+import com.back.boundedContext.cash.domain.CashPolicy;
 import com.back.boundedContext.cash.domain.Wallet;
 import com.back.boundedContext.cash.out.CashMemberRepository;
 import com.back.boundedContext.cash.out.WalletRepository;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Component
@@ -24,5 +26,14 @@ public class CashSupport {
     @Transactional(readOnly = true)
     public Optional<Wallet> findWalletByHolder(CashMember holder) {
         return walletRepository.findByHolder(holder);
+    }
+
+    public Optional<Wallet> findWalletByHolderId(int holderId) {
+        return walletRepository.findByHolderId(holderId);
+    }
+
+    public Optional<Wallet> findHoldingWallet() {
+        // 고정된 holding용 지갑 자체를 가져옴
+        return walletRepository.findByHolderId(CashPolicy.HOLDING_MEMBER_ID);
     }
 }
