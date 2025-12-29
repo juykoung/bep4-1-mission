@@ -18,13 +18,13 @@ public class Member extends SourceMember {
     }
 
     public int increseActiveScore(int score) {
-        if (score == 0) {return getActiveScore();}
-        setActiveScore(getActiveScore() + score);
+        if (score == 0) {return getActivityScore();}
+        setActivityScore(getActivityScore() + score);
 
         publishEvent(
                 new MemberModifiedEvent(new MemberDto(this))
         );
-        return getActiveScore();
+        return getActivityScore();
     }
 
 }

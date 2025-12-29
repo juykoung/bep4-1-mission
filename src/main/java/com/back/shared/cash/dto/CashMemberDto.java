@@ -23,7 +23,7 @@ public class CashMemberDto {
                 member.getModifyDate(),
                 member.getUsername(),
                 member.getNickname(),
-                member.getActiveScore()
+                member.getActivityScore()
         );
     }
 }
