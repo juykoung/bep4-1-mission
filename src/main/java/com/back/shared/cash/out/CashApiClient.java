@@ -8,7 +8,7 @@ import org.springframework.web.client.RestClient;
 @Service
 public class CashApiClient {
     private final RestClient restClient = RestClient.builder()
-            .baseUrl("http://localhost:8080/api/v1/cash")
+            .baseUrl("http://localhost:9090/api/v1/cash")
             .build();
 
     public WalletDto getItemByHolderId(int holderId) {

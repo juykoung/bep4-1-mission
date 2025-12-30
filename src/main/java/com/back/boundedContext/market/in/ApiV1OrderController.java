@@ -12,6 +12,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+
 @RestController
 @RequestMapping("/api/v1/market/orders")
 @RequiredArgsConstructor
@@ -40,6 +42,10 @@ public class ApiV1OrderController {
             @PathVariable int id,
             @Valid @RequestBody ConfirmPaymentByTossPaymentsReqBody reqBody
     ) {
+        System.out.println("=== 디버깅 ===");
+        System.out.println("Path Variable ID: " + id);
+        System.out.println("Request Body orderId: " + reqBody.orderId());
+        System.out.println("Split 결과: " + Arrays.toString(reqBody.orderId().split("-")));
         Order order = marketFacade.findOrderById(id).get();
 
         if (order.isCanceled())
