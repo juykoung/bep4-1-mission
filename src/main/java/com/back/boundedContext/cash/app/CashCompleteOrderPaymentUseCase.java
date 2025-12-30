@@ -5,7 +5,7 @@ import com.back.boundedContext.cash.domain.Wallet;
 import com.back.global.exception.EventPublisher.EventPublisher;
 import com.back.shared.cash.event.CashOrderPaymentFailedEvent;
 import com.back.shared.cash.event.CashOrderPaymentSucceededEvent;
-import com.back.shared.market.event.MarketOrderPaymentRequestEvent;
+import com.back.shared.market.dto.OrderDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,40 +15,40 @@ public class CashCompleteOrderPaymentUseCase {
     private final CashSupport cashSupport;
     private final EventPublisher eventPublisher;
 
-    public void handle(MarketOrderPaymentRequestEvent event) {
-        Wallet customerWallet = cashSupport.findWalletByHolderId(event.getOrder().getCustomerId()).get();
+    public void completeOrderPayment(OrderDto order, long pgPaymentAmount) {
+        Wallet customerWallet = cashSupport.findWalletByHolderId(order.getCustomerId()).get();
         Wallet holdingWallet = cashSupport.findHoldingWallet().get();
 
-        if (event.getPgPaymentAmount() > 0) {
+        if (pgPaymentAmount > 0) {
             customerWallet.credit(
-                    event.getPgPaymentAmount(),
+                    pgPaymentAmount,
                     CashLog.EventType.충전__PG결제_토스페이먼츠,
                     "Order",
-                    event.getOrder().getId()
+                    order.getId()
             );
         }
-        boolean canPay = customerWallet.getBalance() >= event.getOrder().getSalePrice();
+        boolean canPay = customerWallet.getBalance() >= order.getSalePrice();
 
         if (canPay) {
             //고객 지갑에서 차감 (결제?)
             customerWallet.debit(
-                    event.getOrder().getSalePrice(),
+                    order.getSalePrice(),
                     CashLog.EventType.사용__주문결제,
                     "Order",
-                    event.getOrder().getId()
+                    order.getId()
             );
             // 홀딩에 구매한 금액 추가(홀딩)
             holdingWallet.credit(
-                    event.getOrder().getSalePrice(),
+                    order.getSalePrice(),
                     CashLog.EventType.임시보관__주문결제,
                     "Order",
-                    event.getOrder().getId()
+                    order.getId()
             );
             // 성공 이벤트 발행
             eventPublisher.publish(
                     new CashOrderPaymentSucceededEvent(
-                            event.getOrder(),
-                            event.getPgPaymentAmount()
+                            order,
+                            pgPaymentAmount
                     )
             );
         } else {
@@ -56,10 +56,10 @@ public class CashCompleteOrderPaymentUseCase {
             eventPublisher.publish(
                     new CashOrderPaymentFailedEvent(
                             "400-1",
-                            "충전은 완료했지만 %번 주문을 결제완료처리를 하기에는 예치금이 부족합니다.".formatted(event.getOrder().getId()),
-                            event.getOrder(),
-                            event.getPgPaymentAmount(),
-                            event.getPgPaymentAmount() - customerWallet.getBalance()
+                            "충전은 완료했지만 %번 주문을 결제완료처리를 하기에는 예치금이 부족합니다.".formatted(order.getId()),
+                            order,
+                            pgPaymentAmount,
+                            pgPaymentAmount - customerWallet.getBalance()
                     )
             );
         }

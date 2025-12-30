@@ -11,7 +11,7 @@ public class MemberApiClient {
 
     public MemberApiClient(@Value("${custom.global.internalBackUrl}") String internalBackUrl) {
         this.restClient = RestClient.builder()
-                .baseUrl(internalBackUrl + "/api/vi/member").build();}
+                .baseUrl(internalBackUrl + "/api/v1/member").build();}
 
     public String getRandomSecureTip() {
         return restClient.get()
