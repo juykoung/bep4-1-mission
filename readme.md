@@ -8,9 +8,8 @@
 
 # 토스 페이먼츠 테스트
 
-- [결제시도](https://cdpn.io/pen/debug/RNRPJaa?authentication_hash=LQMExmPxQVWk)
-- https://cdpn.io/pen/debug/RNRPJaa?authentication_hash=yoMZEKQEvPGk
-      - [소스코드](https://codepen.io/jangka44/pen/yyJBXaM?editors=1000)
+- [결제시도](https://cdpn.io/pen/debug/RNRPJaa?authentication_hash=vWkRwVnwYyjM)
+    - [소스코드](https://codepen.io/fbfgznyk-the-bold/pen/RNRPJaa)
 - [최종승인](https://codepen.io/jangka44/debug/GgqKEWV)
     - 직접 접근 금지
     - [소스코드](https://codepen.io/fbfgznyk-the-bold/pen/qENdYzw?editors=1000)

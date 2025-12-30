@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class CashOrderFailedEvent {
+public class CashOrderPaymentFailedEvent {
     private final String resultCode;
     private final String msg;
     private final OrderDto order;

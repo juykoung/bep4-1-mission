@@ -2,10 +2,9 @@ package com.back.boundedContext.cash.app;
 
 import com.back.boundedContext.cash.domain.CashLog;
 import com.back.boundedContext.cash.domain.Wallet;
-import com.back.boundedContext.market.out.OrderRepository;
 import com.back.global.exception.EventPublisher.EventPublisher;
-import com.back.shared.cash.event.CashOrderFailedEvent;
-import com.back.shared.cash.event.CashOrderSucceededEvent;
+import com.back.shared.cash.event.CashOrderPaymentFailedEvent;
+import com.back.shared.cash.event.CashOrderPaymentSucceededEvent;
 import com.back.shared.market.event.MarketOrderPaymentRequestEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,7 +46,7 @@ public class CashCompleteOrderPaymentUseCase {
             );
             // 성공 이벤트 발행
             eventPublisher.publish(
-                    new CashOrderSucceededEvent(
+                    new CashOrderPaymentSucceededEvent(
                             event.getOrder(),
                             event.getPgPaymentAmount()
                     )
@@ -55,7 +54,7 @@ public class CashCompleteOrderPaymentUseCase {
         } else {
             // 실패 이벤트 발행
             eventPublisher.publish(
-                    new CashOrderFailedEvent(
+                    new CashOrderPaymentFailedEvent(
                             "400-1",
                             "충전은 완료했지만 %번 주문을 결제완료처리를 하기에는 예치금이 부족합니다.".formatted(event.getOrder().getId()),
                             event.getOrder(),

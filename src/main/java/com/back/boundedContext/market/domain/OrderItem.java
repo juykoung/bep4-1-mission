@@ -13,17 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class OrderItem extends BaseIdAndTime {
-    /**
-     * 주문상품에 필요한 것
-     * <p>
-     * 주문
-     * 상품
-     * 상품이름
-     * 상품가격
-     * 상품 세일 가격
-     * ?? 수수료
-     */
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Order order;
 

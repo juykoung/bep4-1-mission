@@ -2,10 +2,7 @@ package com.back.boundedContext.cash.domain;
 
 import com.back.global.jpa.BaseEntity;
 import com.back.global.jpa.BaseManualIdAndTime;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +13,7 @@ import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.CascadeType.REMOVE;
 
 @Entity
+@Table(name = "CASH_WALLET")
 @NoArgsConstructor
 @Getter
 public class Wallet extends BaseManualIdAndTime {
