@@ -20,14 +20,6 @@ import static jakarta.persistence.FetchType.LAZY;
 @Getter
 @NoArgsConstructor
 public class Order extends BaseIdAndTime {
-    /**
-     * 주문에 필요한 것들
-     *
-     * 구매자
-     * 상품 목록
-     * 가격
-     * 세일가격
-     */
     @ManyToOne(fetch = LAZY)
     private MarketMember buyer;
 
@@ -36,6 +28,7 @@ public class Order extends BaseIdAndTime {
 
     private LocalDateTime requestPaymentDate;
     private LocalDateTime paymentDate;
+    private LocalDateTime cancelDate;
 
     @OneToMany(mappedBy = "order", cascade = {PERSIST, REMOVE}, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
@@ -85,5 +78,13 @@ public class Order extends BaseIdAndTime {
 
     public boolean isPaid() {
         return paymentDate != null;
+    }
+
+    public boolean isCanceled() {
+        return cancelDate != null;
+    }
+
+    public boolean isPaymentInProgress() {
+        return requestPaymentDate != null && paymentDate == null && cancelDate == null;
     }
 }
