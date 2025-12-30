@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class PostApiClient {
     private final RestClient restClient = RestClient.builder()
-            .baseUrl("http://localhost:9090/api/v1/post")
+            .baseUrl("http://localhost:8080/api/v1/post")
             .build();
 
     public List<PostDto> getItems() {
