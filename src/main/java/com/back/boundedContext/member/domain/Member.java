@@ -22,9 +22,19 @@ public class Member extends SourceMember {
         setActivityScore(getActivityScore() + score);
 
         publishEvent(
-                new MemberModifiedEvent(new MemberDto(this))
+                new MemberModifiedEvent(toDto())
         );
         return getActivityScore();
     }
 
+    public MemberDto toDto() {
+        return new MemberDto(
+                getId(),
+                getCreateDate(),
+                getModifyDate(),
+                getUsername(),
+                getNickname(),
+                getActivityScore()
+        );
+    }
 }

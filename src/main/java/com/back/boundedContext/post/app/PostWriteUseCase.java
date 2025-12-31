@@ -22,9 +22,7 @@ public class PostWriteUseCase {
         Post post = postRepository.save(new Post(author, title, content));
 
         eventPublisher.publish(
-                new PostCreatedEvent(
-                        new PostDto(post)
-                )
+                new PostCreatedEvent(post.toDto())
         );
         String randomSecureTip = memberApiClient.getRandomSecureTip();
 

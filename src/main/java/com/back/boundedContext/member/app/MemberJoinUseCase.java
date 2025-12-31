@@ -22,7 +22,7 @@ public class MemberJoinUseCase {
         });
         Member member = memberRepository.save(new Member(username, password, nickname));
 
-        eventPublisher.publish(new MemberJoinedEvent(new MemberDto(member)));
+        eventPublisher.publish(new MemberJoinedEvent(member.toDto()));
         return new RsData<>("200", "%d번 멤버 가입완료".formatted(member.getId()), member);
     }
 

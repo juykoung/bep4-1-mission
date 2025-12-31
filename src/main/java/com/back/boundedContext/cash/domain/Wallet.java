@@ -2,6 +2,7 @@ package com.back.boundedContext.cash.domain;
 
 import com.back.global.jpa.BaseEntity;
 import com.back.global.jpa.BaseManualIdAndTime;
+import com.back.shared.cash.dto.WalletDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class Wallet extends BaseManualIdAndTime {
 
     @OneToMany(mappedBy = "wallet", cascade = {PERSIST, REMOVE}, orphanRemoval = true)
     private List<CashLog> cashLogs = new ArrayList<>();
+
 
     public Wallet(CashMember holder) {
         super(holder.getId());
@@ -75,5 +77,16 @@ public class Wallet extends BaseManualIdAndTime {
         cashLogs.add(cashLog);
 
         return cashLog;
+    }
+
+    public WalletDto toDto() {
+        return new WalletDto(
+                getId(),
+                getCreateDate(),
+                getModifyDate(),
+                holder.getId(),
+                holder.getUsername(),
+                balance
+        );
     }
 }
