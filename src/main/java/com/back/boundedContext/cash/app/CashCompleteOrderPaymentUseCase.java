@@ -23,7 +23,7 @@ public class CashCompleteOrderPaymentUseCase {
             customerWallet.credit(
                     pgPaymentAmount,
                     CashLog.EventType.충전__PG결제_토스페이먼츠,
-                    "Order",
+                    order.getModelTypeCode(),
                     order.getId()
             );
         }
@@ -34,14 +34,14 @@ public class CashCompleteOrderPaymentUseCase {
             customerWallet.debit(
                     order.getSalePrice(),
                     CashLog.EventType.사용__주문결제,
-                    "Order",
+                    order.getModelTypeCode(),
                     order.getId()
             );
             // 홀딩에 구매한 금액 추가(홀딩)
             holdingWallet.credit(
                     order.getSalePrice(),
                     CashLog.EventType.임시보관__주문결제,
-                    "Order",
+                    order.getModelTypeCode(),
                     order.getId()
             );
             // 성공 이벤트 발행
